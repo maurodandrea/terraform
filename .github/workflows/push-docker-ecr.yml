@@ -10,39 +10,46 @@ on:
 permissions:
   contents: read
 
-jobs:
-  terraform:
-    name: 'Terraform'
-    runs-on: ubuntu-latest
-    environment: dev
+  jobs:
+    docker:
+      runs-on: ubuntu-latest
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
+      # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+      defaults:
+        run:
+          shell: bash
 
-    steps:
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+        
+        - name: Set up QEMU
+          uses: docker/setup-qemu-action@v3
+
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v3
+
+        - name: Configure AWS Credentials
+          uses: aws-actions/configure-aws-credentials@v3
+          with:
+            #role-to-assume: arn:aws:iam::713024823233:role/githubrole
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: eu-south-1
+
     # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v3
-      with:
-        #role-to-assume: arn:aws:iam::713024823233:role/githubrole
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-west-2
+    #- name: Checkout
+    #  uses: actions/checkout@v3
 
     # Checks that all Terraform configuration files adhere to a canonical format
-    - name: dockerbuild
-      run: docker build -t strapi-docker .
+        - name: dockerbuild
+          run: docker build -t strapi-docker .
 
-    - name: dockertag
-      run: docker tag strapi-docker:latest 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-docker:latest
+        - name: dockertag
+          run: docker tag strapi-docker:latest 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-docker:latest
 
-    - name: awslogin
-      run: aws ecr get-login-password --region eu-south-1 | docker login --username AWS --password-stdin 713024823233.dkr.ecr.eu-south-1.amazonaws.com
+        - name: awslogin
+          run: aws ecr get-login-password --region eu-south-1 | docker login --username AWS --password-stdin 713024823233.dkr.ecr.eu-south-1.amazonaws.com
 
-    - name: dockerpush
-      run: docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
+        - name: dockerpush
+          run: docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
