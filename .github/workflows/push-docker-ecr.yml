@@ -65,5 +65,16 @@ jobs:
         #- name: awslogin
         #  run: aws ecr get-login-password --region eu-south-1 | docker login --username AWS --password-stdin 713024823233.dkr.ecr.eu-south-1.amazonaws.com
 
-        - name: dockerpush
-          run: docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-docker:latest
+        #- name: dockerpush
+        #  run: docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-docker:latest
+
+        - name: Build & Push to AWS ECR Private
+          uses: opspresso/action-docker@master
+          with:
+            args: --ecr
+          env:
+           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+           AWS_REGION: "eu-south-1"
+           TAG_NAME: "latest"
+           BUILDX: "true"
