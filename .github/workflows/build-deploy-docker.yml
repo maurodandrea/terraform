@@ -80,4 +80,4 @@ jobs:
           # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           # AWS_REGION: "eu-south-1"
           # TAG_NAME: "latest"
-          # BUILDX: "true"
+          # BUILDX: "true" 
