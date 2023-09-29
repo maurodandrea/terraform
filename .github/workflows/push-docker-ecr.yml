@@ -50,7 +50,7 @@ jobs:
         #   tags: user/app:latest
         # Checks that all Terraform configuration files adhere to a canonical format
         - name: dockerbuild
-          run: docker build -t strapi-docker .
+          run: docker build -t strapi-website .
 
         - name: dockertag
           run: docker tag strapi-docker:latest 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
