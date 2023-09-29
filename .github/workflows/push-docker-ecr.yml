@@ -7,7 +7,7 @@ on:
       - '.infrastructure/docker/*'
       - '.github/workflows/*'
 #  pull_request:
-#    branches: '**'
+##    branches: '**'
 permissions:
   contents: read
 
