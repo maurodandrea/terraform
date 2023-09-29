@@ -57,6 +57,7 @@ jobs:
 
         - name: awslogin
           run: aws ecr get-login-password --region eu-south-1 | docker login --username AWS --password-stdin 713024823233.dkr.ecr.eu-south-1.amazonaws.com
+               docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-docker:latest
 
-        - name: dockerpush
-          run: docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-docker:latest
+        #- name: dockerpush
+        #  run: docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-docker:latest
