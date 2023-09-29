@@ -36,7 +36,7 @@ resource "aws_ecs_service" "website-cms-ecs" {
   cluster         = "strapi-website-ecs-cluster"
   desired_count   = 1
   launch_type     = "FARGATE"
-  ##force_new_deployment = true
+  force_new_deployment = true
   task_definition = aws_ecs_task_definition.cds-website-cms.arn
 
   network_configuration {
