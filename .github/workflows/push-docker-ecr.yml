@@ -54,3 +54,4 @@ jobs:
 
         - name: dockerpush
           run: docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
+          
