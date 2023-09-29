@@ -1,6 +1,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node,emacs,macos,turbo,nextjs,storybookjs,intellij+all,terraform
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,emacs,macos,turbo,nextjs,storybookjs,intellij+all,terraform
-
+/.infrastructure/strapi*
 ### Emacs ###
 # -*- mode: gitignore; -*-
 *~
