@@ -69,6 +69,8 @@ jobs:
           run: aws ecr get-login-password --region eu-south-1 | docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
           #run: aws ecr get-login-password --region eu-south-1 713024823233.dkr.ecr.eu-south-1.amazonaws.com | docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
 
+        - name: refresh service
+          run: aws ecs update-service --cluster strapi-website-ecs-cluster --service strapi-website-ecs --force-new-deployment --region eu-south-1
         #- name: Build & Push to AWS ECR Private
         #  uses: opspresso/action-docker@master
          # with:
