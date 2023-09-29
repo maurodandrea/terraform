@@ -2,7 +2,7 @@ name: 'pushdockerecr'
 
 on:
   push:
-    branches: [ "mainxxx" ]
+    branches: [ "main" ]
     paths:
       - '.infrastructure/docker/*'
 #  pull_request:
