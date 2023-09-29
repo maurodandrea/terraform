@@ -22,6 +22,7 @@ resource "aws_rds_cluster" "website-cms-database-cluster" {
   database_name      = "strapidb"
   master_username    = "postgres"
   master_password    = aws_ssm_parameter.db_password.value
+  skip_final_snapshot = true
   ### manage_master_user_password = true  ###IN ALTERNATIVA ALLA RIGA PRECEDENTE
 
   serverlessv2_scaling_configuration {

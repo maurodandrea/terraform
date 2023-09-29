@@ -7,6 +7,7 @@ data "template_file" "cms_app" {
 
   vars = {
     image          = aws_ecr_repository.image-repository.repository_url
+    ##image          = aws_ecrpublic_repository.repo.repository_uri
     fargate_cpu    = var.fargate_cpu
     fargate_memory = var.fargate_memory
     aws_region     = "eu-south-1"

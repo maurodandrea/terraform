@@ -24,7 +24,7 @@ variable "tags" {
 }
 
 variable "app_port" {
-  default = 1337
+  default = 80   ##1337    #####VALORE DI TEST
 }
 
 variable "health_check_path" {
