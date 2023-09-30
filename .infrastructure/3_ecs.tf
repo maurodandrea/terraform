@@ -21,7 +21,7 @@ data "template_file" "cms_app" {
 }
 
 resource "aws_ecs_task_definition" "cds-website-cms" {
-  family = "website-cms-task2"
+  family = "website-cms-task"
   execution_role_arn       = aws_iam_role.ecs-task-execution-role.arn
   task_role_arn            = aws_iam_role.task_role.arn
   network_mode             = "awsvpc"
