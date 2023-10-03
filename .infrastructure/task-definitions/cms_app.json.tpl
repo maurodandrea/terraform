@@ -4,7 +4,7 @@
     "image": "${image}",
     "portMappings": [
       {
-        "containerPort": 80
+        "containerPort": 1337
       }
     ],
     "environment": [
