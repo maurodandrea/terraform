@@ -67,7 +67,7 @@ jobs:
               password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
         #- name: awslogin
-        #  run: aws ecr get-login-password --region eu-south-1 | docker login --username AWS --password-stdin 713024823233.dkr.ecr.eu-south-1.amazonaws.com
+        #  run:  aws ecr get-login-password --region eu-south-1 | docker login --username AWS --password-stdin 713024823233.dkr.ecr.eu-south-1.amazonaws.com
 
         - name: dockerpush
           run: aws ecr get-login-password --region eu-south-1 | docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
