@@ -1,0 +1,2 @@
+docker build --build-arg NODE_ENV=production --build-arg STRAPI_URL=cms-load-balancer-1433109178.eu-south-1.elb.amazonaws.com -t prova:latest -f Dockerfile.prod .
+ok
