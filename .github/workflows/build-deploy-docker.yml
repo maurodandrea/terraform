@@ -54,7 +54,8 @@ jobs:
         # Checks that all Terraform configuration files adhere to a canonical format
         - name: dockerbuild
          ## run: docker build -t strapi-website .
-          run: docker build --build-arg NODE_ENV=production --build-arg STRAPI_URL=cms-load-balancer-1433109178.eu-south-1.elb.amazonaws.com -t strapi-website:latest -f Dockerfile.prod .
+         ## run: docker build --build-arg NODE_ENV=production --build-arg STRAPI_URL=cms-load-balancer-1433109178.eu-south-1.elb.amazonaws.com -t strapi-website:latest -f Dockerfile.prod .
+            run: docker build -t strapi-website:latest .
 
         - name: dockertag
           run: docker tag strapi-website:latest 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
