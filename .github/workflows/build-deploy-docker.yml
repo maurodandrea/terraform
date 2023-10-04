@@ -23,9 +23,9 @@ jobs:
       steps:
         - name: Checkout
           uses: actions/checkout@v3
-          with:
+          #with:
             ##repository: my-org/my-tools
-            path: strapi-multitenancy-opzione-2
+            #path: strapi-multitenancy-opzione-2
         
         - name: Set up QEMU
           uses: docker/setup-qemu-action@v3
@@ -54,11 +54,11 @@ jobs:
         # Checks that all Terraform configuration files adhere to a canonical format 
         
         
-        - name: verifica path
-          run: ls
+       # - name: verifica path
+       #   run: ls
 
-        - name: set dir
-          run: cd strapi-multitenancy-opzione-2 | docker build -t strapi-website:latest .
+        #- name: set dir
+        #  run: cd strapi-multitenancy-opzione-2 | docker build -t strapi-website:latest .
 
         - name: dockerbuild
          ## run: docker build -t strapi-website .
