@@ -10,9 +10,9 @@ data "template_file" "cms_app" {
     ##image          = aws_ecrpublic_repository.repo.repository_uri
     fargate_cpu    = var.fargate_cpu
     fargate_memory = var.fargate_memory
-    aws_region     = "eu-south-1"
+    aws_region     = var.aws_region
     db_host              = aws_rds_cluster.website-cms-database-cluster.endpoint
-    db_user              = "postgres"
+    db_user              = aws_rds_cluster.website-cms-database-cluster.master_username
     db_password_arn      = aws_ssm_parameter.db_password.arn
     bucket_name = var.asset_bucket_name
     github_token_arn     = aws_ssm_parameter.github_token.arn

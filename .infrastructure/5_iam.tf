@@ -12,24 +12,6 @@ resource "aws_iam_role" "ecs-task-execution-role" {
       },
       "Effect": "Allow",
       "Sid": ""
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:GetObject"
-      ],
-      "Resource": [
-        "arn:aws:s3:::media-library-s3-strapi-713024823233/.env"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:GetBucketLocation"
-      ],
-      "Resource": [
-        "arn:aws:s3:::media-library-s3-strapi-713024823233"
-      ]
     }
   ]
 }
@@ -75,6 +57,53 @@ data "aws_iam_policy_document" "ecs-task-execution" {
       aws_ssm_parameter.admin_jwt_secret.arn,
     ]
   }
+  
+    statement {
+      effect = "Allow"
+      actions = [
+        "s3:GetObject"
+      ]
+      resources = [
+        "arn:aws:s3:::media-library-s3-strapi-713024823233/.env"
+      ]
+    }
+
+    statement {
+      effect = "Allow"
+      actions = [
+        "s3:GetBucketLocation"
+      ]
+      resources = [
+        "arn:aws:s3:::media-library-s3-strapi-713024823233"
+      ]
+    }
+
+resource "aws_s3_bucket_policy" "example_bucket_policy" {
+  bucket = "example-bucket"
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${aws_iam_role.example_role.name}"
+        },
+        "Action": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "Resource": [
+          "arn:aws:s3:::example-bucket",
+          "arn:aws:s3:::example-bucket/*"
+        ]
+      }
+    ]
+  })
+}
+
+
+
 }
 
 resource "aws_iam_policy" "ecs-task-execution" {
