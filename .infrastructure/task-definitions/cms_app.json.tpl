@@ -8,8 +8,8 @@
       }
     ],
     "environmentFiles": [
-                {
-                    "value": "${environment_files}",
+                {    
+                    "value": "arn:aws:s3:::media-library-s3-strapi-713024823233/.env",
                     "type": "s3"
                 }
             ],

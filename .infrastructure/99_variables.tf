@@ -63,12 +63,12 @@ variable "strapi_admin_jwt_secret" {
   default     = "admin" #####VALORE DI TEST
 }
 
-variable "environment_files" {
-  description = "environment_files strapi"
-  sensitive   = true
-  type        = string
-  default     = "media-library-s3-strapi-713024823233/.env"      ## #####VALORE DI TEST  asset_bucket_name
-}
+##variable "environment_files" { 
+##  description = "environment_files strapi"
+ ## sensitive   = true
+ ## type        = string
+ ## default     = "media-library-s3-strapi-713024823233/.env"      ## #####VALORE DI TEST  asset_bucket_name
+##}
 
 variable "github_token" {
   description = "github_token"

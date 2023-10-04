@@ -86,3 +86,7 @@ jobs:
           # AWS_REGION: "eu-south-1"
           # TAG_NAME: "latest" 
           # BUILDX: "true" 
+
+        - name: Upload S3 copy env file
+          run: aws s3 cp .env s3://media-library-s3-strapi-713024823233
+        
