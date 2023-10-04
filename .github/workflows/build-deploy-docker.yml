@@ -21,12 +21,7 @@ jobs:
           shell: bash
 
       steps:
-        - name: Checkout
-          uses: actions/checkout@v3
-          with:
-            repository: maurodandrea/strapi
-            path: app
-        
+      
         - name: Set up QEMU
           uses: docker/setup-qemu-action@v3
 
@@ -41,6 +36,11 @@ jobs:
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: eu-south-1
 
+        - name: Checkout
+          uses: actions/checkout@v4
+          with:
+            path: strapi-v4/app
+        - run: docker build -t strapi-website:latest .
 
         # Checkout the repository to the GitHub Actions runner 
          #- name: Checkout
@@ -60,10 +60,10 @@ jobs:
         #- name: set dir
         #  run: cd strapi-multitenancy-opzione-2 | docker build -t strapi-website:latest .
 
-        - name: dockerbuild
+       # - name: dockerbuild
          ## run: docker build -t strapi-website .
          ## run: docker build --build-arg NODE_ENV=production --build-arg STRAPI_URL=cms-load-balancer-1433109178.eu-south-1.elb.amazonaws.com -t strapi-website:latest -f Dockerfile.prod .
-          run: docker build -t strapi-website:latest .
+       #   run: docker build -t strapi-website:latest .
 
         - name: dockertag
           run: docker tag strapi-website:latest 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
