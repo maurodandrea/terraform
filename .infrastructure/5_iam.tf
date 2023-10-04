@@ -19,7 +19,7 @@ resource "aws_iam_role" "ecs-task-execution-role" {
         "s3:GetObject"
       ],
       "Resource": [
-        "arn:aws:s3:::media-library-s3-strapi-713024823233/.env"  ###VALORE DI TEST
+        "arn:aws:s3:::media-library-s3-strapi-713024823233/.env"
       ]
     },
     {
@@ -28,7 +28,7 @@ resource "aws_iam_role" "ecs-task-execution-role" {
         "s3:GetBucketLocation"
       ],
       "Resource": [
-        "arn:aws:s3:::media-library-s3-strapi-713024823233"   ###VALORE DI TEST
+        "arn:aws:s3:::media-library-s3-strapi-713024823233"
       ]
     }
   ]
