@@ -42,7 +42,7 @@ jobs:
           #  path: strapi-v4/app
         - run: docker build -t strapi-website:latest .
 
-        # Checkout the repository to the GitHub Actions runner 
+        # Checkout the repository to the GitHub Actions runner  
          #- name: Checkout
         #  uses: actions/checkout@v3
         #- name: Build and push
