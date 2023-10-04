@@ -52,13 +52,13 @@ jobs:
          #  push: true
         #   tags: user/app:latest
         # Checks that all Terraform configuration files adhere to a canonical format  
-       #0 - name: dockerbuild
+        - name: dockerbuild
          ## run: docker build -t strapi-website .
          ## run: docker build --build-arg NODE_ENV=production --build-arg STRAPI_URL=cms-load-balancer-1433109178.eu-south-1.elb.amazonaws.com -t strapi-website:latest -f Dockerfile.prod .
-       #0   run: docker build -t strapi-website:latest .
+          run: docker build -t strapi-website:latest .
 
-       #0 - name: dockertag
-       #0   run: docker tag strapi-website:latest 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
+        - name: dockertag
+          run: docker tag strapi-website:latest 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
 
         - name: Login to ECR
           uses: docker/login-action@v3
@@ -70,8 +70,8 @@ jobs:
         #- name: awslogin
         #  run:  aws ecr get-login-password --region eu-south-1 | docker login --username AWS --password-stdin 713024823233.dkr.ecr.eu-south-1.amazonaws.com
 
-        #0- name: dockerpush
-        #0  run: aws ecr get-login-password --region eu-south-1 | docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
+        - name: dockerpush
+          run: aws ecr get-login-password --region eu-south-1 | docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
           #run: aws ecr get-login-password --region eu-south-1 713024823233.dkr.ecr.eu-south-1.amazonaws.com | docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
 
         - name: refresh service
