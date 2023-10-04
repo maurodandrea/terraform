@@ -58,10 +58,7 @@ jobs:
           run: ls
 
         - name: set dir
-          run: cd strapi-multitenancy-opzione-2
-
-        - name: verifica path
-          run: ls
+          run: cd strapi-multitenancy-opzione-2 | docker build -t strapi-website:latest .
 
         - name: dockerbuild
          ## run: docker build -t strapi-website .
