@@ -58,7 +58,7 @@ jobs:
           run: ls
 
         - name: set dir
-          run: strapi-multitenancy-opzione-2
+          run: cd strapi-multitenancy-opzione-2
 
         - name: dockerbuild
          ## run: docker build -t strapi-website .
