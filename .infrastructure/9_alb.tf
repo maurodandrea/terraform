@@ -14,15 +14,15 @@ resource "aws_alb_target_group" "app" {
   vpc_id      = aws_vpc.website-cms.id
   target_type = "ip"
 
-  health_check {
-    healthy_threshold   = "3"
-    interval            = "30"
-    protocol            = "HTTP" #tfsec:ignore:AWS004 - uses plain HTTP instead of HTTPS
-    matcher             = "200"
-    timeout             = "3"
-    path                = var.health_check_path
-    unhealthy_threshold = "2"
-  }
+  ##health_check {
+  ##  healthy_threshold   = "3"
+  ##  interval            = "30"
+   ## protocol            = "HTTP" #tfsec:ignore:AWS004 - uses plain HTTP instead of HTTPS
+   ## matcher             = "200"
+   ## timeout             = "3"
+   ## path                = var.health_check_path
+   ## unhealthy_threshold = "2"
+  ##}
 }
 
 # Redirect all traffic from the ALB to the target group
