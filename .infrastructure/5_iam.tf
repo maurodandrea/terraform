@@ -101,9 +101,6 @@ resource "aws_s3_bucket_policy" "example_bucket_policy" {
     ]
   })
 }
-
-
-
 }
 
 resource "aws_iam_policy" "ecs-task-execution" {
