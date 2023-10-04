@@ -1,24 +1,24 @@
-FROM node:16
+#FROM node:16
 
 # Installing libvips-dev for sharp Compatibility
 
-RUN apt-get update && apt-get install libvips-dev -y
+#RUN apt-get update && apt-get install libvips-dev -y
 
-ARG NODE_ENV=development
+#ARG NODE_ENV=development
 
-ENV NODE_ENV=${NODE_ENV}
+#ENV NODE_ENV=${NODE_ENV}
 
-WORKDIR /opt/
+#WORKDIR /opt/
 
-COPY ./package.json ./
+#COPY ./package.json ./
 
-ENV PATH /opt/node_modules/.bin:$PATH
+#ENV PATH /opt/node_modules/.bin:$PATH
 
-RUN npm install
+RUN npm i
 
-WORKDIR /opt/app
+#WORKDIR /opt/app
 
-COPY ./ .
+#COPY ./ .
 
 RUN npm run build
 
