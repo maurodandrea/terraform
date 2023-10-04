@@ -60,6 +60,9 @@ jobs:
         - name: set dir
           run: cd strapi-multitenancy-opzione-2
 
+        - name: verifica path
+          run: ls
+
         - name: dockerbuild
          ## run: docker build -t strapi-website .
          ## run: docker build --build-arg NODE_ENV=production --build-arg STRAPI_URL=cms-load-balancer-1433109178.eu-south-1.elb.amazonaws.com -t strapi-website:latest -f Dockerfile.prod .
