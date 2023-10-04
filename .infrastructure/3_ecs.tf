@@ -38,6 +38,7 @@ resource "aws_ecs_service" "website-cms-ecs" {
   launch_type     = "FARGATE"
   force_new_deployment = true
   task_definition = aws_ecs_task_definition.cds-website-cms.arn
+  health_check_grace_period_seconds  = 60000
 
   network_configuration {
   security_groups  = [aws_security_group.ecs_tasks.id]

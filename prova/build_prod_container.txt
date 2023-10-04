@@ -1,5 +1,7 @@
-docker build --build-arg NODE_ENV=production --build-arg STRAPI_URL=cms-load-balancer-1433109178.eu-south-1.elb.amazonaws.com -t prova:latest -f Dockerfile.prod .
+docker build --build-arg NODE_ENV=developement --build-arg STRAPI_URL=cms-load-balancer-1433109178.eu-south-1.elb.amazonaws.com -t prova:latest -f Dockerfile.prod .
 
 
 make docker-build
 make docker-run
+
+aws ecr get-login-password --region eu-south-1 | docker login --username AWS --password-stdin 713024823233.dkr.ecr.eu-south-1.amazonaws.com

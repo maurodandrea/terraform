@@ -12,6 +12,24 @@ resource "aws_iam_role" "ecs-task-execution-role" {
       },
       "Effect": "Allow",
       "Sid": ""
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::media-library-s3-strapi-713024823233/.env"  ###VALORE DI TEST
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetBucketLocation"
+      ],
+      "Resource": [
+        "arn:aws:s3:::media-library-s3-strapi-713024823233"   ###VALORE DI TEST
+      ]
     }
   ]
 }

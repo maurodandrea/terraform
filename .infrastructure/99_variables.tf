@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "environment" {
   type        = string
   description = "Environment"
-  default     = "prod" ##### VALORE DI TEST
+  default     = "production" ##### VALORE DI TEST
 }
 
 variable "github_repository" {
