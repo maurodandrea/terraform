@@ -55,7 +55,7 @@ jobs:
         
         
         - name: verifica path
-          run: ls | cd strapi-multitenancy-opzione-2
+          run: ls
 
         - name: dockerbuild
          ## run: docker build -t strapi-website .
