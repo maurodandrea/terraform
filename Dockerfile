@@ -14,7 +14,7 @@
 
 #ENV PATH /opt/node_modules/.bin:$PATH
 
-RUN npm i
+RUN npm install
 
 #WORKDIR /opt/app
 
