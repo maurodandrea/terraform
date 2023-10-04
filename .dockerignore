@@ -1,6 +1,0 @@
-**/.infrastructure
-**/.github
-**/prova
-.gitignore
-.dockerignore
-Dockerfile
