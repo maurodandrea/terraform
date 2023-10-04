@@ -7,6 +7,12 @@
         "containerPort": 1337
       }
     ],
+    "environmentFiles": [
+                {
+                    "value": "${environment_files}",
+                    "type": "s3"
+                }
+            ],
     "environment": [
       {
         "name": "NODE_ENV",

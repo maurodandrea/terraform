@@ -63,6 +63,13 @@ variable "strapi_admin_jwt_secret" {
   default     = "admin" #####VALORE DI TEST
 }
 
+variable "environment_files" {
+  description = "environment_files strapi"
+  sensitive   = true
+  type        = string
+  default     = "media-library-s3-strapi-713024823233/.env"      ## #####VALORE DI TEST  asset_bucket_name
+}
+
 variable "github_token" {
   description = "github_token"
   sensitive   = true
@@ -78,4 +85,14 @@ variable "product_name" {
 variable "account_id" {
   description = "Account"
   default     = "713024823233" #####VALORE DI TEST
+}
+
+# https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_EnvironmentFile.html
+variable "environment_files" {
+  type = list(object({
+    type  = string
+    value = string
+  }))
+  description = "One or more files containing the environment variables to pass to the container. This maps to the --env-file option to docker run. The file must be hosted in Amazon S3. This option is only available to tasks using the EC2 launch type. This is a list of maps"
+  default     = null
 }
