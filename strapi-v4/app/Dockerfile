@@ -3,7 +3,7 @@ FROM strapi/base
 # Let WatchTower know to ignore this container for checking
 LABEL com.centurylinklabs.watchtower.enable="false"
 
-WORKDIR strapi-v4//app
+WORKDIR strapi-v4/app
 
 COPY ./package*.json ./
 
