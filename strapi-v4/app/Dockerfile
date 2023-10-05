@@ -1,21 +1,14 @@
-#FROM strapi/base
-FROM alpine:3.17
-
-# Let WatchTower know to ignore this container for checking
-LABEL com.centurylinklabs.watchtower.enable="false"
-
-WORKDIR /app
-
-COPY ./package*.json ./
-
-RUN npm i
-
-COPY . .
-
-ENV NODE_ENV production
-
+FROM node:16
+# Installing libvips-dev for sharp Compatability
+RUN apt-get update && apt-get install libvips-dev -y
+ARG NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
+WORKDIR /opt/
+COPY ./package.json ./package-lock.json ./
+ENV PATH /opt/node_modules/.bin:$PATH
+RUN npm install
+WORKDIR /opt/app
+COPY ./ .
 RUN npm run build
-
 EXPOSE 1337
-
 CMD ["npm", "start"]
