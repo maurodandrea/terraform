@@ -16,6 +16,8 @@ resource "aws_vpc" "website-cms" {
   }
 }
 
+
+
 ###
 # AWS Internet Gateway
 ###

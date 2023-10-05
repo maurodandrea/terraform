@@ -14,3 +14,7 @@
 ###  value = aws_db_instance.website-cms-database.address
 ###}
 
+output "vpc_id" {
+  value = aws_vpc.website-cms.id
+}
+
