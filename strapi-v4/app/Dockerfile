@@ -7,6 +7,8 @@ WORKDIR /app
 
 COPY ./package*.json ./
 
+FROM alpine:3.17
+
 RUN npm i
 
 COPY . .
