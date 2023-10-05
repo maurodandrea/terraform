@@ -48,7 +48,7 @@ jobs:
         #- name: Build and push
         #  uses: docker/build-push-action@v5 
         #  with:
-         #  context: "{{defaultContext}}:.infrastructure/docker"   
+         #  context: "{{defaultContext}}:.infrastructure/docker"    
          #  push: true
         #   tags: user/app:latest
         # Checks that all Terrafor m  configuration files adhere to a canonical format  
