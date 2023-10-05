@@ -51,7 +51,7 @@ jobs:
          #  context: "{{defaultContext}}:.infrastructure/docker"   
          #  push: true
         #   tags: user/app:latest
-        # Checks that all Terrafor m configuration files adhere to a canonical format 
+        # Checks that all Terrafor m  configuration files adhere to a canonical format  
         
         
        # - name: verifica path

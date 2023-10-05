@@ -1,4 +1,5 @@
-FROM strapi/base
+#FROM strapi/base
+FROM alpine:3.17
 
 # Let WatchTower know to ignore this container for checking
 LABEL com.centurylinklabs.watchtower.enable="false"
@@ -6,8 +7,6 @@ LABEL com.centurylinklabs.watchtower.enable="false"
 WORKDIR /app
 
 COPY ./package*.json ./
-
-FROM alpine:3.17
 
 RUN npm i
 
