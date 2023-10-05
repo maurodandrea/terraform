@@ -85,7 +85,7 @@ jobs:
         - name: refresh service
           run: aws ecs update-service --cluster strapi-website-ecs-cluster --service strapi-website-ecs --force-new-deployment --region eu-south-1
         #- name: Build & Push to AWS ECR Private
-        #  uses: opspresso/action-docker@master 
+        #  uses: opspresso/action-docker@master  
          # with:
           #  args: --ecr
          # env:
