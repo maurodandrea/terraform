@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - '.infrastructure/docker/*'
+      - 'strapi-v4/app/*'
       - '.github/workflows/*'
 #  pull_request:
 ##    branches: '**'
