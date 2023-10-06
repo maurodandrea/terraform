@@ -23,44 +23,68 @@ variable "tags" {
   }
 }
 
+# FARGATE ECS CONTAINER ##########################################################
 variable "app_port" {
-  default = 1337    #####VALORE DI TEST
+  default = 1337    ##### VALORE DI DEFAULT APP STRAPI
 }
 
-variable "health_check_path" {
+variable "health_check_path" { ##### Path da monitorare da parte dell' Application Load Balancer ECS
   default = "/"
 }
 
 variable "fargate_cpu" {
   description = "Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)"
-  default     = "1024"   #####VALORE DI TEST
+  default     = "1024"           ##### VALORE DI TEST
 }
 
 variable "fargate_memory" {
   description = "Fargate instance memory to provision (in MiB)"
-  default     = "2048"  #####VALORE DI TEST
+  default     = "2048"           ##### VALORE DI TEST
 }
 
-# RDS database
-# The password for the database can include any printable ASCII character except /, ", @, or a space
+# DATABASE RDS ##########################################################
 variable "rds_cluster_password" {
   description = "RDS cluster password"
   sensitive   = true
   type        = string
-  default     = "adminpassword" #####VALORE DI TEST
+  default     = "adminpassword"  ##### VALORE DI TEST
 }
 
-# Env Vars for the container
+# BUCKET S3 ##########################################################
 variable "asset_bucket_name" {
   type    = string
   default = "media-library-s3-strapi-713024823233" #####VALORE DI TEST
 }
 
+variable "file_env" {
+  type    = string
+  default = "arn:aws:s3:::media-library-s3-strapi-713024823233/.env" #####VALORE DI TEST
+}
+
+# APP STRAPI ##########################################################
 variable "strapi_admin_jwt_secret" {
   description = "Strapi Admin JWT Secret"
   sensitive   = true
   type        = string
   default     = "admin" #####VALORE DI TEST
+}
+
+variable "product_name" {
+  description = "Product"
+  default     = "b2b-portals-strapi" ##### VALORE DI TEST
+}
+
+# GITHUB ##########################################################  DA VERIFICARE SE NECESSARIO
+variable "github_token" {
+  description = "github_token"
+  sensitive   = true
+  type        = string
+  default     = "github" ##### VALORE DI TEST
+}
+
+variable "account_id" {
+  description = "Account"
+  default     = "713024823233" ##### VALORE DI TEST
 }
 
 ##variable "environment_files" { 
@@ -70,19 +94,4 @@ variable "strapi_admin_jwt_secret" {
  ## default     = "media-library-s3-strapi-713024823233/.env"      ## #####VALORE DI TEST  asset_bucket_name
 ##}
 
-variable "github_token" {
-  description = "github_token"
-  sensitive   = true
-  type        = string
-  default     = "github" #####VALORE DI TEST
-}
 
-variable "product_name" {
-  description = "Product"
-  default     = "sitovetrina" #####VALORE DI TEST
-}
-
-variable "account_id" {
-  description = "Account"
-  default     = "713024823233" #####VALORE DI TEST
-}
