@@ -82,7 +82,7 @@ jobs:
         #  run:  aws ecr get-login-password --region eu-south-1 | docker login --username AWS --password-stdin 713024823233.dkr.ecr.eu-south-1.amazonaws.com
 
         - name: dockerpush
-          run: aws ecr get-login-password --region eu-south-1 | docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
+          run: aws ecr get-login-password --region eu-south-1 | docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:dev
           #run: aws ecr get-login-password --region eu-south-1 713024823233.dkr.ecr.eu-south-1.amazonaws.com | docker push 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi-website:latest
 
         - name: refresh service
