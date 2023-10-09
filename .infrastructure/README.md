@@ -15,7 +15,7 @@ Comment the `backend "s3" {}` line from `00-main.tf` file:
 
 ``` sh
 terraform {
-  required_version = "1.2.8"
+  required_version = "1.5.7"
 
   # v------- this line!
   # backend "s3" {}
@@ -23,7 +23,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "4.67.0"
+      version = "5.16.2"
     }
   }
 }
@@ -66,7 +66,7 @@ Remove the comment from the line `backend "s3" {}` from `00-main.tf` file:
 
 ``` sh
 terraform {
-  required_version = "1.2.8"
+  required_version = "1.5.7"
 
   # v------- this line!
   backend "s3" {}
@@ -74,7 +74,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "4.67.0"
+      version = "5.16.2"
     }
   }
 }
