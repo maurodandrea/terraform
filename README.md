@@ -1,57 +1,111 @@
-# 🚀 Getting started with Strapi
+## Requirements
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+The following tools are required to setup and manage a new environment. 
 
-### `develop`
+1. [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) installed.
+2. [tfenv](https://github.com/tfutils/tfenv) to mange terraform versions.
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+## How setup a new environment
 
-```
-npm run develop
-# or
-yarn develop
-```
+Make sure you don't have a `*.tfstate` file within the `.infrastructure/.terraform` folder. If you have any, delete them.
 
-### `start`
+### Step 1: Disable the backend
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+Comment the `backend "s3" {}` line from `00-main.tf` file:
 
-```
-npm run start
-# or
-yarn start
-```
+``` sh
+terraform {
+  required_version = "1.5.7"
 
-### `build`
+  # v------- this line!
+  # backend "s3" {}
 
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
-
-```
-npm run build
-# or
-yarn build
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.16.2"
+    }
+  }
+}
 ```
 
-## ⚙️ Deployment
+### Step 2: Create IaC resources
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+The following steps require a valid aws session
 
-## 📚 Learn more
+``` sh
+cd .infrastructure
 
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
+# create an empty terraform vars file
+touch env/<env_name>/terraform.tfvars
 
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
+# install dependencies
+./terraform.sh init <env_name>
 
-## ✨ Community
+# plan to see what is created for the environment <env_name>
+./terraform.sh plan <env_name> -target module.identity
 
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
+# apply to create the resources required for environment <env_name>
+./terraform.sh apply <env_name> -target module.identity
+```
 
----
+Among other things the previous steps creates the following resources:
+* An S3 bucket to store the terraform state.
+* A DynamoDB table to manage terraform locks.
+* The Github OpenId connection
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+These resources are needed to keep the locks and state of terraform and to allow github workflows to access to them.
+
+Copy the output provided by terraform, you need the following two outputs: 
+* `terraform_backend_bucket_name`
+* `terraform_lock_dynamodb_table`
+
+### Step 3: Add the backend and upload the local state
+
+Remove the comment from the line `backend "s3" {}` from `00-main.tf` file:
+
+``` sh
+terraform {
+  required_version = "1.5.7"
+
+  # v------- this line!
+  backend "s3" {}
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.16.2"
+    }
+  }
+}
+```
+
+Write into the file `env/<env_name>/backend.tfvars` the following content replacing the keys with the valid values:
+
+``` sh
+bucket         = "<put_here_the_terraform_backend_bucket_name>"
+key            = "<env_name>/main/tfstate"
+region         = "eu-south-1"
+dynamodb_table = "<put_here_the_terraform_lock_dynamodb_table>"
+```
+
+And finally execute the following command that upload state to S3. Reply yes to the question:
+
+``` sh
+# you will ask to push the existing state to S3 bucket
+ ./terraform.sh init <env_name>
+```
+
+### Step 4: Add the IAM role as GitHub environment secret
+
+In order to allow github to manage the aws resources you have to add the `IAM_ROLE` environment secret filled with the `arn` of `GitHubActionIACRole` role. Find the `arn` of the role via management console. 
+
+### Step 5: Run manually the workflow "Deploy Infrastructure" and Check on AWS
+
+After verifying that the "Code Review Infra" workflow ran correctly without errors, from the Actions section of GitHub, manually run the "Deploy Infrastructure" workflow. Monitor its execution and make sure it finishes successfully. 
+Finally, connect to the AWS console and verify that all the resources of Strapi's interest have been deployed, such as:
+- Bucket S3 for Strapi Media Library
+- Cluster ECS Fargate
+- Repository ECR
+- Database RDS Aurora PostgreSQL
+- VPC and Application Load Balancer
