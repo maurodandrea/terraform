@@ -2,7 +2,7 @@ name: 'pushdockerecr'
 
 on:
   push:
-    branches: [ "main2" ]
+    branches: [ "main" ]
     paths:
       - 'strapi-v4/app/*'
       - '.github/workflows/*'
