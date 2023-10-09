@@ -19,7 +19,7 @@ fi
 
 if echo "init plan apply refresh import output state taint destroy" | grep -w $action > /dev/null; then
   if [ $action = "init" ]; then
-    terraform $action
+    terraform $action $other
   elif [ $action = "output" ] || [ $action = "state" ] || [ $action = "taint" ]; then
     # init terraform backend
     terraform init
