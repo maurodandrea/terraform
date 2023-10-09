@@ -38,6 +38,9 @@ jobs:
 
         - name: Checkout
           uses: actions/checkout@v4
+
+        - name: Upload S3 copy env file
+          run: aws s3 cp strapi-v4/app/.env s3://media-library-s3-strapi-713024823233
           #with:
           #  path: strapi-v4/app
         - run: docker build -t strapi-website:latest .
@@ -97,6 +100,5 @@ jobs:
 
         - name: verifica path
           run: ls
-        - name: Upload S3 copy env file
-          run: aws s3 cp strapi-v4/app/.env s3://media-library-s3-strapi-713024823233
+
         
