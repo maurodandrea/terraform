@@ -1,0 +1,59 @@
+name: Deploy Infrastructure
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+      environment:
+        description: 'The environment used as target'
+        type: choice
+        required: true
+        default: prod
+        options:
+        - prod
+
+defaults:
+  run:
+    shell: bash
+    working-directory: .infrastructure
+
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
+jobs:
+  deploy:
+    name: Terraform apply (manual)
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@50ac8dd1e1b10d09dac7b8727528b91bed831ac0 # 3.0.2
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: eu-south-1
+
+      - name: Setup Terraform
+        uses: ./.github/actions/setup-terraform
+        with:
+          environment: ${{ inputs.environment }}
+
+      - name: Terraform Apply
+        run: terraform plan
+        #run: |
+        #  ./terraform.sh apply ${{ inputs.environment }} -auto-approve
