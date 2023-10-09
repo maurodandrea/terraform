@@ -53,6 +53,6 @@ jobs:
           environment: ${{ inputs.environment }}
 
       - name: Terraform Apply
-
-        run: |
-          ./terraform.sh apply ${{ inputs.environment }} -auto-approve
+        run: terraform plan
+        #run: |
+        #  ./terraform.sh apply ${{ inputs.environment }} -auto-approve
