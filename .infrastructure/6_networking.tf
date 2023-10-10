@@ -1,6 +1,4 @@
-###
-# AWS VPC
-###
+###  AWS VPC ###
 
 data "aws_availability_zones" "available" {
   state = "available"
@@ -16,11 +14,7 @@ resource "aws_vpc" "website-cms" {
   }
 }
 
-
-
-###
-# AWS Internet Gateway
-###
+###  AWS Internet Gateway ###
 
 resource "aws_internet_gateway" "website-cms" {
   vpc_id = aws_vpc.website-cms.id
@@ -39,9 +33,7 @@ resource "aws_nat_gateway" "gw" {
   allocation_id = aws_eip.website-cms.*.id[count.index]
 }
 
-###
-# AWS Subnets
-###
+###  AWS Subnets ###
 
 resource "aws_subnet" "website-cms-private" {
   count = 2
@@ -71,9 +63,7 @@ resource "aws_subnet" "website-cms-public" {
   }
 }
 
-###
-# AWS Routes
-###
+### AWS Routes ###
 
 resource "aws_route_table" "website-cms-public_subnet" {
   vpc_id = aws_vpc.website-cms.id
@@ -120,9 +110,7 @@ resource "aws_route_table_association" "website-cms-private" {
 }
 
 
-###
-# AWS Network ACL
-###
+### AWS Network ACL ###
 
 resource "aws_default_network_acl" "website-cms" {
   default_network_acl_id = aws_vpc.website-cms.default_network_acl_id
@@ -163,7 +151,6 @@ resource "aws_default_network_acl" "website-cms" {
     to_port    = 0
   }
 
-  // See https://www.terraform.io/docs/providers/aws/r/default_network_acl.html#managing-subnets-in-the-default-network-acl
   lifecycle {
     ignore_changes = [subnet_ids]
   }
@@ -173,9 +160,7 @@ resource "aws_default_network_acl" "website-cms" {
   }
 }
 
-###
-# AWS EIP
-###
+### AWS EIP ###
 
 resource "aws_eip" "website-cms" {
   count      = 2

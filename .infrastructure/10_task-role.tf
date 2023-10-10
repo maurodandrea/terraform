@@ -1,5 +1,5 @@
 resource "aws_iam_role" "task_role" {
-  name               = "task_role"
+  name               = var.ecs_task_role
   assume_role_policy = data.aws_iam_policy_document.task_role.json
 
   tags = {

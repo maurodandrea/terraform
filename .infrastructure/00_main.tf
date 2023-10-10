@@ -1,7 +1,7 @@
 terraform {
   required_version = "1.5.7"
 
-  ###backend "s3" {}
+  backend "s3" {}
 
   required_providers {
     aws = {
@@ -18,8 +18,8 @@ provider "aws" {
   }
 }
 
-# Init IaC resources ####################### DA DECOMMENTARE ###################################
-###module "identity" {
-###  source            = "./identity"
-###  github_repository = var.github_repository
-###}
+# Init IaC resources ##########################################################
+module "identity" {
+  source            = "./identity"
+  github_repository = var.github_repository
+}

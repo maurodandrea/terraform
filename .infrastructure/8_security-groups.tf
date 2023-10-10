@@ -1,6 +1,4 @@
-###
-# AWS EC2 Security Group
-###
+### AWS EC2 Security Group ###
 
 resource "aws_security_group" "website-cms-lb" {
   name        = "website-cms-lb"
@@ -62,9 +60,7 @@ resource "aws_security_group" "ecs_tasks" {
 }
 
 
-###
-# AWS RDS Security Group
-###
+### AWS RDS Security Group ###
 # Traffic to the DB should only come from ECS
 resource "aws_security_group" "website-cms-database" {
   name        = "website-cms-database"

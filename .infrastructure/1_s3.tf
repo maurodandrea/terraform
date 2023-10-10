@@ -1,5 +1,11 @@
+data "aws_caller_identity" "current" {}
+
+locals {
+  account_id = data.aws_caller_identity.current.account_id
+}
+
 resource "aws_s3_bucket" "website-asset-bucket" {
-  bucket = var.asset_bucket_name  ###"media-library-s3-strapi-713024823233"
+  bucket = "media-library-s3-strapi-${local.account_id}"
 }
 
 resource "aws_s3_bucket_public_access_block" "website-asset-bucket" {
@@ -24,15 +30,5 @@ data "aws_iam_policy_document" "website_iam_policy" {
       "${aws_s3_bucket.website-asset-bucket.arn}",
       "${aws_s3_bucket.website-asset-bucket.arn}/*"
     ]
-
-    ### principals {
-    ###   type        = "AWS"
-    ###   identifiers = [aws_cloudfront_origin_access_identity.main.iam_arn]
-    ### }
   }
 }
-
-###resource "aws_s3_bucket_policy" "cloudfront" {
-### bucket = aws_s3_bucket.website-asset-bucket.id
-### policy = data.aws_iam_policy_document.website_iam_policy.json
-###}

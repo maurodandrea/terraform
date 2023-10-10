@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "image-repository" {
-  name = "strapi-website"
+  name = var.ecr_repository
 
   image_scanning_configuration {
     scan_on_push = true
@@ -29,13 +29,3 @@ resource "aws_ecr_lifecycle_policy" "policy" {
   }
   EOF
 }
-
-##provider "aws" {
- ## alias  = "us_east_1"
- ## region = "us-east-1"
-##}
-
-##resource "aws_ecrpublic_repository" "repo" {
-  ##provider = aws.us_east_1
-  ##repository_name = "public-strapi-website/cms"
-  ##}

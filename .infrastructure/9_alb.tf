@@ -1,14 +1,14 @@
 # alb.tf
 
 resource "aws_alb" "cms-load-balancer" {
-  name            = "cms-load-balancer"
+  name            = var.cms_alb
   subnets         = aws_subnet.website-cms-public.*.id
   security_groups = [aws_security_group.website-cms-lb.id]
   internal        = false #tfsec:ignore:AWS005
 }
 
 resource "aws_alb_target_group" "app" {
-  name        = "cms-target-group"
+  name        = var.cms_alb_target_group
   port        = var.app_port
   protocol    = "HTTP" #tfsec:ignore:AWS004 - uses plain HTTP instead of HTTPS
   vpc_id      = aws_vpc.website-cms.id
@@ -28,7 +28,7 @@ resource "aws_alb_target_group" "app" {
 # Redirect all traffic from the ALB to the target group
 resource "aws_alb_listener" "front_end" {
   load_balancer_arn = aws_alb.cms-load-balancer.id
-  port              = 1337 ##80
+  port              = 1337
   protocol          = "HTTP" #tfsec:ignore:AWS004 - uses plain HTTP instead of HTTPS
 
   default_action {
