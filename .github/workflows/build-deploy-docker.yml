@@ -43,7 +43,7 @@ jobs:
         #  run: aws s3 cp strapi-v4/app/.env s3://media-library-s3-strapi-713024823233
           #with:
           #  path: strapi-v4/app
-        - run: docker build -t strapi-website:latest .
+        - run: docker build -t strapi:latest .
 
         # Checkout the repository to the GitHub  Actions runner   b   
          #- name: Checkout s
