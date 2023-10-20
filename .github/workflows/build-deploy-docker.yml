@@ -75,8 +75,8 @@ jobs:
           uses: docker/login-action@v3
           with:
               registry: 713024823233.dkr.ecr.eu-south-1.amazonaws.com
-              username: ${{ secrets.AWS_ACCESS_KEY_ID }}
-              password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+              #username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+              #password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
         #- name: awslogin 
         #  run:  aws ecr get-login-password --region eu-south-1 | docker login --username AWS --password-stdin 713024823233.dkr.ecr.eu-south-1.amazonaws.com
