@@ -10,23 +10,29 @@ on:
 ##    branches: '**'
 permissions:
   contents: read
-
+  
+defaults:
+  run:
+    shell: bash
+    working-directory: strapi-v4/app
+    
 jobs:
     docker:
       runs-on: ubuntu-latest
 
       # Use the Bash  shell regardless  whether the GitHub Actions  runner is ubuntu-latest, macos-latest, or windows-latest
-      defaults:
-        run:
-          shell: bash
+      #defaults:
+     #   run:
+       #   shell: bash
 
       steps:
-      
+        - name: verifica path
+          run: ls
         - name: Set up QEMU
-          uses: docker/setup-qemu-action@v3
+          uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3.0.0
 
         - name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v3
+          uses: docker/setup-buildx-action@f95db51fddba0c2d1ec667646a06c2ce06100226 # v3.0.0
 
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@v3
@@ -37,7 +43,7 @@ jobs:
             aws-region: eu-south-1
 
         - name: Checkout
-          uses: actions/checkout@v4
+          uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
 
         #- name: Upload S3 copy env file
         #  run: aws s3 cp strapi-v4/app/.env s3://media-library-s3-strapi-713024823233
@@ -72,7 +78,7 @@ jobs:
           run: docker tag strapi:latest 713024823233.dkr.ecr.eu-south-1.amazonaws.com/strapi:latest
 
         - name: Login to ECR
-          uses: docker/login-action@v3
+          uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
           with:
               registry: 713024823233.dkr.ecr.eu-south-1.amazonaws.com
               #username: ${{ secrets.AWS_ACCESS_KEY_ID }}
