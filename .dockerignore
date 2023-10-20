@@ -1,6 +1,5 @@
 **/.infrastructure
 **/.github
-**/strapi-v4
 .gitignore
 node_modules
 license.txt
