@@ -42,10 +42,10 @@ jobs:
         shell: bash
         run: aws s3 cp site.zip s3://sito-vetrina2
 
-      #- name: Sync bucket
-      #  shell: bash
-      #  run: aws s3 sync s3://sito-vetrina2 s3://sito-vetrina --delete
+      - name: Sync bucket
+        shell: bash
+        run: aws s3 sync s3://sito-vetrina2 s3://sito-vetrina --delete
 
-     # - name: Refresh CDN
-      #  shell: bash
-      #  run: aws cloudfront create-invalidation --distribution-id EZSPXQW5JQIRH --paths "/*"
+      - name: Refresh CDN
+        shell: bash
+        run: aws cloudfront create-invalidation --distribution-id EZSPXQW5JQIRH --paths "/*"
