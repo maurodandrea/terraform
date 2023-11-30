@@ -36,7 +36,7 @@ jobs:
 
       - name: zip file
         shell: bash
-        run: zip -m site.zip /apps/*.*
+        run: zip -m site.zip /apps/*
         
       - name: Copy to S3 Bucket temp
         shell: bash
