@@ -40,7 +40,7 @@ jobs:
         
       - name: Copy to S3 Bucket temp
         shell: bash
-        run: aws s3 cp ./site/site.zip s3://sito-vetrina2
+        run: aws s3 cp site.zip s3://sito-vetrina2
 
       #- name: Sync bucket
       #  shell: bash
