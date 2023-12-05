@@ -37,7 +37,7 @@ permissions:
 jobs:
   deploy:
     name: Build and push CMS image
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.head_ref == 'refs/heads/main')
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     continue-on-error: false
     environment: ${{ inputs.environment }}
