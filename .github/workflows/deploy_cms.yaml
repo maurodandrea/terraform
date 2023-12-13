@@ -62,7 +62,7 @@ jobs:
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: "strapi"
+          ECR_REPOSITORY: strapi
           IMAGE_TAG: ${{ github.sha }}
         with:
             context: apps/strapi-cms
