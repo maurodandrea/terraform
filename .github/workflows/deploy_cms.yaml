@@ -37,7 +37,7 @@ permissions:
 jobs:
   deploy:
     name: Build and push CMS image
-    #if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main2')
+    #if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     continue-on-error: false
     environment: ${{ inputs.environment }}
@@ -71,20 +71,20 @@ jobs:
             tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
             provenance: false
 
-     # - name: Generate definition file
-    #    run: aws ecs describe-task-definition --task-definition cms-task-def --query taskDefinition > task-definition.json
+      - name: Generate definition file
+        run: aws ecs describe-task-definition --task-definition cms-task-def --query taskDefinition > task-definition.json
        
-    #  - name: Update Image in task definition
-    #    id: task-def
-     #   uses: aws-actions/amazon-ecs-render-task-definition@v1
-     #   with:
-    #       task-definition: apps/strapi-cms/task-definition.json
-     #      container-name: cms-docker
-     #      image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ github.sha }}
+      - name: Update Image in task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+           task-definition: apps/strapi-cms/task-definition.json
+           container-name: cms-docker
+           image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ github.sha }}
 
-     # - name: Deploy new ECS task definition
-    #    uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a # v1.4.11
-     #   with:
-     #       task-definition: ${{ steps.task-def.outputs.task-definition }}
-      #      service: cms-ecs
-      #      cluster: cms-ecs-cluster
+      - name: Deploy new ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a # v1.4.11
+        with:
+           task-definition: ${{ steps.task-def.outputs.task-definition }}
+           service: cms-ecs
+           cluster: cms-ecs-cluster
