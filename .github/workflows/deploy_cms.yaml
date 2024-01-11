@@ -40,7 +40,10 @@ jobs:
     #if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     continue-on-error: false
-    environment: ${{ inputs.environment }}
+    strategy:
+      matrix:
+        environment: [ 'prod' ]
+    environment: ${{ matrix.environment }}
 
     steps:      
       - name: Checkout
