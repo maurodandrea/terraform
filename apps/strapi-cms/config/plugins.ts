@@ -5,7 +5,6 @@ export default ({ env }: any) => ({
       providerOptions: {
         baseUrl: env('CDN_URL'),
         s3Options: {
-          endpoint: env('AWS_BUCKET_FULL_URL'),
           accessKeyId: env('AWS_ACCESS_KEY_ID'),
           secretAccessKey: env('AWS_ACCESS_SECRET'),
           region: env('AWS_REGION'),
