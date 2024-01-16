@@ -8,6 +8,7 @@ export default ({ env }: any) => ({
           accessKeyId: env('AWS_ACCESS_KEY_ID'),
           secretAccessKey: env('AWS_ACCESS_SECRET'),
           region: env('AWS_REGION'),
+          endpoint: env('AWS_BUCKET_FULL_URL'),
           params: {
             ACL: 'private',
             signedUrlExpires: 15 * 60,
