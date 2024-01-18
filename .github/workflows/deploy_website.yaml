@@ -1,6 +1,11 @@
 name: Deploy Website
 
 on:
+  pull_request:
+    types:
+      - closed # Trigger when the PR is closed
+    branches:
+      - 'main' # Target branch is main
   workflow_dispatch:
     inputs:
       environment:
@@ -11,12 +16,44 @@ on:
         options:
           - prod
 
+  # Allows external webhook trigger
+  repository_dispatch:
+    types:
+      - webhook
+
 # These permissions are needed to interact with GitHub's OIDC Token endpoint.
 permissions:
   id-token: write
   contents: read
 
 jobs:
+
+  cd_deploy:
+    name: Deploy to S3
+    # Trigger when the PR is merged
+    if: (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || github.event_name == 'repository_dispatch'
+    runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        environment: [ 'prod' ]
+
+    environment: ${{ matrix.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+
+      - name: Deploy website
+        uses: ./.github/actions/deploy
+        with:
+          environment: ${{ matrix.environment }}
+          iam_role: ${{ secrets.IAM_ROLE_DEPLOY_WEBSITE }}
+          bucket: ${{ vars.S3_BUCKET_NAME }}
+          cloudfront_distribution_id: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
+          strapi_api_token: ${{ secrets.STRAPI_TOKEN }}
+          strapi_api_base_url: ${{ vars.STRAPI_URL }}
+          cdn_path: ${{ vars.CDN_PATH }}
+
   manual_deploy:
     name: Deploy to S3 (manual trigger) - (${{ inputs.environment }})
     if: github.event_name == 'workflow_dispatch'
@@ -27,21 +64,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v3
+      - name: Deploy website
+        uses: ./.github/actions/deploy
         with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: eu-south-1
-
-      - name: Copy to S3 Bucket temp
-        shell: bash
-        run: aws s3 sync ./site s3://sito-vetrina2 --delete
-
-      - name: Sync bucket
-        shell: bash
-        run: aws s3 sync s3://sito-vetrina2 s3://sito-vetrina --delete
-
-      - name: Refresh CDN
-        shell: bash
-        run: aws cloudfront create-invalidation --distribution-id EZSPXQW5JQIRH --paths "/*"
+          environment: ${{ inputs.environment }}
+          iam_role: ${{ secrets.IAM_ROLE_DEPLOY_WEBSITE }}
+          bucket: ${{ vars.S3_BUCKET_NAME }}
+          cloudfront_distribution_id: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
+          strapi_api_token: ${{ secrets.STRAPI_TOKEN }}
+          strapi_api_base_url: ${{ vars.STRAPI_URL }}
+          cdn_path: ${{ vars.CDN_PATH }}

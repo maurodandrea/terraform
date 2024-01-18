@@ -1,0 +1,47 @@
+name: Deploy Website
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'The environment used as target'
+        type: choice
+        required: true
+        default: prod
+        options:
+          - prod
+
+# These permissions are needed to interact with GitHub's OIDC Token endpoint.
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  manual_deploy:
+    name: Deploy to S3 (manual trigger) - (${{ inputs.environment }})
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: 'ubuntu-latest'
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: eu-south-1
+
+      - name: Copy to S3 Bucket temp
+        shell: bash
+        run: aws s3 sync ./site s3://sito-vetrina2 --delete
+
+      - name: Sync bucket
+        shell: bash
+        run: aws s3 sync s3://sito-vetrina2 s3://sito-vetrina --delete
+
+      - name: Refresh CDN
+        shell: bash
+        run: aws cloudfront create-invalidation --distribution-id EZSPXQW5JQIRH --paths "/*"
