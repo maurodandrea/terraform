@@ -34,11 +34,11 @@ export default ({ env }: any) => ({
   'update-static-content': {
     enabled: true,
     config: {
-      githubToken: env('GITHUB_PAT'), // accessing personal github token from env file
-      owner: env('REPO_OWNER'), // owner of the repo
-      repo: env('REPO_NAME'), // name of the repo
-      workflowId: env('WORKFLOW_ID'), // workflowId OR filename
-      branch: env('TARGET_BRANCH'), // branch name
+      githubToken: env('GITHUB_PAT'),
+      owner: env('REPO_OWNER', 'maurodandrea'),
+      repo: env('REPO_NAME', 'terraform'),
+      workflowId: env('WORKFLOW_ID', 'deploy_website.yaml'),
+      branch: env('TARGET_BRANCH', 'main'),
     },
   },
 });
