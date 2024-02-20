@@ -6,7 +6,7 @@ on:
         # Run only if there are at least one change matching the following paths  
         paths:
           - 'apps/strapi-cms/**'
-          - '.github/workflows/deploy_cms.yaml'
+          - '.github/workflows/test_deploy_cms.yaml'
 
   workflow_dispatch:
     inputs:
