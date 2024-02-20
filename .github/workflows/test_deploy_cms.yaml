@@ -24,6 +24,11 @@ on:
         default: prod
         options:
         - prod
+      ManualTag:
+        description: 'The Manual Tag for Rollback'
+        type: string
+        required: false
+        default: rollback
 
 defaults:
   run:
