@@ -130,5 +130,6 @@ jobs:
         with:
            task-definition: apps/strapi-cms/task-definition.json
            container-name: cms-docker
-           image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ inputs.tags }}
+           #image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ inputs.tags }}
+           image: ${{ steps.login-ecr.outputs.registry }}/strapi:6c0d6d570ca3734c0936f98338fd2e2202a6e183
 
