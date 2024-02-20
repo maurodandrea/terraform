@@ -129,6 +129,6 @@ jobs:
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
            task-definition: apps/strapi-cms/task-definition-manual.json
-           container-name: cms-docker2
+           container-name: cms-docker
            image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ inputs.tags }}
 
