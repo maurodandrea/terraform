@@ -1,4 +1,4 @@
-name: Test Deploy CMS 4
+name: Test Deploy CMS
 
 on:
   push:
@@ -24,9 +24,9 @@ on:
         default: prod
         options:
         - prod
-      tags:
-        description: 'Tag for Manual Rollback'
-        required: true
+      #tags:
+       # description: 'Tag for Manual Rollback'
+       # required: true
 
 defaults:
   run:
