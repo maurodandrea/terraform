@@ -40,7 +40,7 @@ permissions:
 jobs:
   cd_deploy:
     name: Build and push CMS image
-    if: github.event_name == 'push' && github.event.ref == 'refs/heads/main'
+    #if: github.event_name == 'push' && github.event.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     continue-on-error: false
     strategy:
@@ -90,53 +90,9 @@ jobs:
            container-name: cms-docker
            image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ github.sha }}
 
-      - name: Deploy new ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a # v1.4.11
-        with:
-           task-definition: ${{ steps.task-def.outputs.task-definition }}
-           service: cms-ecs
-           cluster: cms-ecs-cluster
-
-  manual_deploy:
-    name: Build and push CMS image (Manual)
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    strategy:
-      matrix:
-        environment: [ 'prod' ]
-    environment: ${{ matrix.environment }}
-
-    steps:      
-      - name: Checkout
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
-    
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@50ac8dd1e1b10d09dac7b8727528b91bed831ac0
-        with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: eu-south-1
-           # role-to-assume: ${{ secrets.IAM_ROLE_DEPLOY_CMS }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 # v2.0.1
-
-      - name: Generate definition file
-        run: aws ecs describe-task-definition --task-definition cms-task-def --query taskDefinition > task-definition.json
-       
-      - name: Update Image in task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-           task-definition: apps/strapi-cms/task-definition.json
-           container-name: cms-docker
-           image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ inputs.tags }}
-
-      - name: Deploy new ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a # v1.4.11
-        with:
-           task-definition: ${{ steps.task-def.outputs.task-definition }}
-           service: cms-ecs
-           cluster: cms-ecs-cluster
+      ##- name: Deploy new ECS task definition
+     #   uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a # v1.4.11
+     #   with:
+     #      task-definition: ${{ steps.task-def.outputs.task-definition }}
+     #      service: cms-ecs
+     #      cluster: cms-ecs-cluster
