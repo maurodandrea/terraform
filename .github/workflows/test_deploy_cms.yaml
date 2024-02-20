@@ -118,7 +118,7 @@ jobs:
            # role-to-assume: ${{ secrets.IAM_ROLE_DEPLOY_CMS }}
 
       - name: Login to Amazon ECR
-        id: login-ecr-man
+        id: login-ecr
         uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 # v2.0.1
 
       - name: Generate definition file
@@ -130,7 +130,7 @@ jobs:
         with:
            task-definition: apps/strapi-cms/task-definition.json
            container-name: cms-docker
-           image: ${{ steps.login-ecr-man.outputs.registry }}/strapi:${{ inputs.tags }}
+           image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ inputs.tags }}
 
       - name: Deploy new ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a # v1.4.11
