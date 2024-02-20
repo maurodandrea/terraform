@@ -122,13 +122,13 @@ jobs:
         uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 # v2.0.1
 
       - name: Generate definition file
-        run: aws ecs describe-task-definition --task-definition cms-task-def --query taskDefinition > task-definition.json
+        run: aws ecs describe-task-definition --task-definition cms-task-def --query taskDefinition > task-definition-manual.json
        
       - name: Update Image in task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-           task-definition: apps/strapi-cms/task-definition.json
-           container-name: cms-docker
+           task-definition: apps/strapi-cms/task-definition-manual.json
+           container-name: cms-docker2
            image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ inputs.tags }}"
 
