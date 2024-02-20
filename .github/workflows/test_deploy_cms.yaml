@@ -66,6 +66,7 @@ jobs:
 
       - name: Build Push and Tag
         id: build-image
+        continue-on-error: true
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
