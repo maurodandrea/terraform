@@ -26,9 +26,6 @@ on:
         - prod
       tags:
         description: 'The Manual Tag for Rollback'
-        type: string
-        required: false
-        default: null
 
 defaults:
   run:
