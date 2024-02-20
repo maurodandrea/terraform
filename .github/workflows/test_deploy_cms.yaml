@@ -44,7 +44,7 @@ jobs:
     name: Build and push CMS image
     if: github.event_name == 'push' && github.event.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    continue-on-error: true
+    continue-on-error: false
     strategy:
       matrix:
         environment: [ 'prod' ]
@@ -131,14 +131,7 @@ jobs:
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-           task-definition: apps/strapi-cms/task-definition.json
+           task-definition: task-definition.json
            container-name: cms-docker
            image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ inputs.tags }}"
-
-      - name: Deploy new ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a # v1.4.11
-        with:
-           task-definition: ${{ steps.task-def.outputs.task-definition }}
-           service: cms-ecs
-           cluster: cms-ecs-cluster
 
