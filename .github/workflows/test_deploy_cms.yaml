@@ -118,30 +118,23 @@ jobs:
            # role-to-assume: ${{ secrets.IAM_ROLE_DEPLOY_CMS }}
 
       - name: Login to Amazon ECR
-        id: login-ecr
+        id: login-ecr-man
         uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 # v2.0.1
-
-      - name: Build Push and Tag
-        id: build-image
-        uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: strapi
-          IMAGE_TAG: ${{ inputs.tags }}
-        with:
-            context: apps/strapi-cms
-            push: true
-           # tags: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ github.sha }}
-            tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
-            provenance: false
 
       - name: Generate definition file
         run: aws ecs describe-task-definition --task-definition cms-task-def --query taskDefinition > task-definition.json
        
       - name: Update Image in task definition
-        id: task-def
+        id: task-def-man
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
            task-definition: apps/strapi-cms/task-definition.json
            container-name: cms-docker
-           image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ inputs.tags }}
+           image: ${{ steps.login-ecr-man.outputs.registry }}/strapi:${{ inputs.tags }}
+
+      - name: Deploy new ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a # v1.4.11
+        with:
+           task-definition: ${{ steps.task-def-man.outputs.task-definition }}
+           service: cms-ecs
+           cluster: cms-ecs-cluster
