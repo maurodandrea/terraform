@@ -120,6 +120,20 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 # v2.0.1
+	
+	  - name: Build Push and Tag
+        id: build-image
+        uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: strapi
+          IMAGE_TAG: ${{ inputs.tags }}
+        with:
+            context: apps/strapi-cms
+            push: true
+           # tags: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ github.sha }}
+            tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+            provenance: false
 
       - name: Generate definition file
         run: aws ecs describe-task-definition --task-definition cms-task-def --query taskDefinition > task-definition.json
@@ -130,6 +144,4 @@ jobs:
         with:
            task-definition: apps/strapi-cms/task-definition.json
            container-name: cms-docker
-           #image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ inputs.tags }}
-           image: ${{ steps.login-ecr.outputs.registry }}/strapi:6c0d6d570ca3734c0936f98338fd2e2202a6e183
-
+           image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ inputs.tags }}
