@@ -64,20 +64,20 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 # v2.0.1
 
-     # - name: Build Push and Tag
-     #   id: build-image
-     #   continue-on-error: true
-     #   uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
-     #   env:
-     #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-     #     ECR_REPOSITORY: strapi
-     #     IMAGE_TAG: ${{ github.sha }}
-     #   with:
-     #       context: apps/strapi-cms
-     #       push: true
+      - name: Build Push and Tag
+       # id: build-image
+        continue-on-error: true
+        uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: strapi
+          IMAGE_TAG: ${{ github.sha }}
+        with:
+            context: apps/strapi-cms
+            push: true
            # tags: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ github.sha }}
-     #       tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
-     #       provenance: false
+            tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+            provenance: false
 
       - name: Generate definition file
         run: aws ecs describe-task-definition --task-definition cms-task-def --query taskDefinition > task-definition.json
@@ -90,9 +90,9 @@ jobs:
            container-name: cms-docker
            image: ${{ steps.login-ecr.outputs.registry }}/strapi:${{ github.sha }}
 
-      ##- name: Deploy new ECS task definition
-     #   uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a # v1.4.11
-     #   with:
-     #      task-definition: ${{ steps.task-def.outputs.task-definition }}
-     #      service: cms-ecs
-     #      cluster: cms-ecs-cluster
+      - name: Deploy new ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a # v1.4.11
+        with:
+           task-definition: ${{ steps.task-def.outputs.task-definition }}
+           service: cms-ecs
+           cluster: cms-ecs-cluster
