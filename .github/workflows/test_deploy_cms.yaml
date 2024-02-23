@@ -17,13 +17,13 @@ on:
         type: choice
         options:
         - warning
-      environment:
-        description: 'The environment used  as target'
-        type: choice
-        required: true
-        default: prod
-        options:
-        - prod
+     # environment:
+     #   description: 'The environment used  as target'
+     #   type: choice
+     #   required: true
+     #   default: prod
+     #   options:
+     #   - prod
       #tags:
        # description: 'Tag for Manual Rollback'
        # required: true
