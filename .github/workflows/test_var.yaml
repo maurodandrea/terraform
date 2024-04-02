@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         tenant: ${{ inputs.tenant }}
-        cdn_tenant: ${{ vars.CDN_PATH_$tenant }}
+        cdn_tenant: ${{ vars.CDN_PATH_A }}
      #   include:
      #     - tenant:  ${{ inputs.tenant }}
       #      cdnvar: vars.CDN_PATH_$tenant
