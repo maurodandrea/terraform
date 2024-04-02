@@ -32,7 +32,7 @@ jobs:
       - name: Set Variabile CDN_PATH
         id: estrai_valore
        # run: echo "cdn_path = ${{ vars.cdn_path${{ inputs.tenant }} }}" 
-        run: echo "::set-output name=cdn_path::${{ env.tenant }}"
+        run: echo "::set-output name=cdn_path::${{ inputs.tenant }}"
 
       - name: Utilizza il valore estratto
         run: echo "Il valore della variabile di contesto è ${{ steps.estrai_valore.outputs.cdn_path }}"
