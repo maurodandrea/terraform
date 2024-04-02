@@ -1,0 +1,32 @@
+name: test var
+on:
+  workflow_dispatch:
+    inputs:
+      tenant:
+        description: 'The tenant inherent to the site'
+        type: string
+        required: true
+
+# These permissions are needed to interact with GitHub's OIDC Token endpoint.
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  manual_deploy:
+    name: manual trigger
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: 'ubuntu-latest'
+
+    concurrency:
+      group: ${{ github.workflow }}-${{ inputs.environment }}
+      cancel-in-progress: false
+
+    steps:
+      - name: Set Variabile CDN_PATH
+        id: set_cdn_path
+        run: echo "::set-output name=cdn_path::vars.CDN_PATH_${{ inputs.tenant }}" 
+
+      - name: Display var
+        run: echo "cdn_path = ${{ steps.set_cdn_path.outputs.cdn_path }}" 
+
