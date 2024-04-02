@@ -37,3 +37,8 @@ jobs:
       - name: Utilizza il valore estratto
         run: echo "Il valore della variabile di contesto è ${{ steps.estrai_valore.outputs.cdn_path }}"
 
+      - name: iff
+        if: ${{ github.event.inputs.tenant == 'A' }}
+        run: echo "Il valore della variabile di contesto è ${{vars.CDN_PATH_A }}"
+        
+
