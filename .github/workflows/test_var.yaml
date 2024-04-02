@@ -18,24 +18,15 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     runs-on: 'ubuntu-latest'
 
-    concurrency:
-      group: ${{ github.workflow }}-${{ inputs.environment }}
-      cancel-in-progress: false
 
     steps:
-      - name: Utilizza il valore estratto
-        run: echo "Il valore della variabile di contesto è ${{ matrix.cdn_tenant }}"
-
-      - name: iff
-        if: ${{ github.event.inputs.tenant == 'A' }}
-        run: echo "Il valore della variabile di contesto è ${{vars.CDN_PATH_A }}"
 
       - name: Set Variabile CDN1
         id: set-value-cdn1
-       # run: echo "cnd_url=$(if [[ "${{ inputs.tenant }}" == "A" ]]; then echo "${{ vars.CDN_PATH_A }}"; else echo "${{ vars.CDN_PATH_B }}"; fi )" >> $GITHUB_ENV
-        run: echo "cnd_url=$(${{ vars.CDN_PATH_${{ inputs.tenant }} }})" >> $GITHUB_ENV
+        run: echo "cnd_url=$(if [[ "${{ inputs.tenant }}" == "A" ]]; then echo "${{ vars.CDN_PATH_A }}"; else echo "${{ vars.CDN_PATH_B }}"; fi )" >> $GITHUB_ENV
+    
       - name: Set Variabile CDN2
-        id: set-value-cdn
+        id: set-value-cdn2
         run: |
           if [[ "${{ inputs.tenant }}" == "A" ]]; then
             echo "Valore di CDN_URL: ${{ vars.CDN_PATH_A }}"
