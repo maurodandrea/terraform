@@ -31,5 +31,5 @@ jobs:
 
     steps:
       - name: Set Variabile CDN_PATH
-        run: echo "cdn_path = ${{ matrix.tenant }}" 
+        run: echo "cdn_path = ${{ matrix.cdn_path }}" 
 
