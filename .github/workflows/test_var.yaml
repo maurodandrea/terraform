@@ -18,8 +18,8 @@ jobs:
       matrix:
         include:
           - tenant:  ${{ inputs.tenant }}
-            var: vars.CDN_PATH_$tenant
-            cdn_path: ${{ matrix.var }}
+            cdnvar: vars.CDN_PATH_$tenant
+            cdn_path: ${{ matrix.cdnvar }}
 
     name: manual trigger
     if: github.event_name == 'workflow_dispatch'
