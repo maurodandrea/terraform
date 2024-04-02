@@ -40,5 +40,15 @@ jobs:
       - name: iff
         if: ${{ github.event.inputs.tenant == 'A' }}
         run: echo "Il valore della variabile di contesto è ${{vars.CDN_PATH_A }}"
+
+      - name: Seleziona la variabile di contesto corretta
+        run: |
+          if [[ "${{ inputs.tenant }}" == "A" ]]; then
+            echo "Valore di CDN_URL: ${{ vars.CDN_PATH_A }}"
+          elif [[ "${{ inputs.tenant }}" == "B" ]]; then
+            echo "Valore di CDN_URL: ${{ vars.CDN_PATH_B }}"
+          else
+            echo "TENANT non valido"
+          fi
         
 
