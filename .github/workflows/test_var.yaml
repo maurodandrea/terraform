@@ -30,3 +30,6 @@ jobs:
       - name: Display var
         run: echo "cdn_path = ${{ steps.set_cdn_path.outputs.cdn_path }}" 
 
+      - name: Display var2
+        run: echo "cdn_path = ${{ ${{ steps.set_cdn_path.outputs.cdn_path }} }}" 
+
