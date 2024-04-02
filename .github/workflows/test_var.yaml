@@ -31,7 +31,7 @@ jobs:
         run: echo "cdn_path = ${{ steps.set_cdn_path.outputs.cdn_path }}" 
 
       - name: Display var2
-        run: echo "cdn_path = $cdn"
+        run: echo "cdn_path = $var_cdn"
         env:
-          cdn: ${{ vars.CDN_PATH_${{ inputs.tenant }} }}
+          var_cdn: vars.CDN_PATH_${{ inputs.tenant }}
 
