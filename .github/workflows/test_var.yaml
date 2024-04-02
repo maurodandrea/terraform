@@ -23,7 +23,7 @@ jobs:
 
       - name: Set Variabile CDN1
         id: set-value-cdn1
-        run: echo "cnd_url=$(if [[ "${{ inputs.tenant }}" == "A" ]]; then echo "${{ vars.CDN_PATH_A }}"; else echo "${{ vars.CDN_PATH_B }}"; fi )" >> $GITHUB_ENV
+        run: echo "cnd_url=$(if [[ "${{ inputs.tenant }}" == "A" ]]; then echo "${{ vars.CDN_PATH_A }}"; elseif [[ "${{ inputs.tenant }}" == "B" ]]; then echo "${{ vars.CDN_PATH_B }}"; else echo "Tenant non valido";fi )" >> $GITHUB_ENV
     
       - name: Set Variabile CDN2
         id: set-value-cdn2
