@@ -33,5 +33,7 @@ jobs:
       - name: Display var2
         run: echo "cdn_path =$var_cdn"
         env:
-          var_cdn: ${{ vars.CDN_PATH_${{ inputs.tenant }} }}
+          tenant: ${{ inputs.tenant }}
+          cdn_tenant: CDN_PATH_$tenant
+          var_cdn: ${{ vars.$cdn_tenant }}
 
