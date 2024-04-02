@@ -17,10 +17,11 @@ jobs:
     strategy:
       matrix:
         tenant: [A, B]
-        cdn_path: [${{ vars.CDN_PATH_A }}, ${{ vars.CDN_PATH_B }}]
+        cdn_path: [ ${{ vars.CDN_PATH_A }} , ${{ vars.CDN_PATH_B }} ]
         include:
           - tenant:  ${{ inputs.tenant }}
-            #cdn_path: ${{ vars.CDN_PATH_${{ inputs.tenant }} }}
+            var: vars.CDN_PATH_$tenant
+            cdn_path: ${{ var }}
 
     name: manual trigger
     if: github.event_name == 'workflow_dispatch'
@@ -32,5 +33,5 @@ jobs:
 
     steps:
       - name: Set Variabile CDN_PATH
-        run: echo "cdn_path = ${{ matrix.cdn_path }}" 
+        run: echo "cdn_path = ${{ matrix.tenant }}" 
 
