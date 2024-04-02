@@ -14,12 +14,12 @@ permissions:
 
 jobs:
   manual_deploy:
-    strategy:
-      matrix:
-        include:
-          - tenant:  ${{ inputs.tenant }}
-            cdnvar: vars.CDN_PATH_$tenant
-            cdn_path: ${{ matrix.include.cdnvar }}
+    #strategy:
+     # matrix:
+     #   include:
+     #     - tenant:  ${{ inputs.tenant }}
+      #      cdnvar: vars.CDN_PATH_$tenant
+     #       cdn_path: ${{ matrix.include.cdnvar }}
     name: manual trigger
     if: github.event_name == 'workflow_dispatch'
     runs-on: 'ubuntu-latest'
@@ -30,5 +30,10 @@ jobs:
 
     steps:
       - name: Set Variabile CDN_PATH
-        run: echo "cdn_path = ${{ matrix.cdn_path }}" 
+        id: estrai_valore
+       # run: echo "cdn_path = ${{ vars.cdn_path${{ inputs.tenant }} }}" 
+        run: echo "::set-output name=cdn_path::${{ env.tenant }}"
+
+      - name: Utilizza il valore estratto
+        run: echo "Il valore della variabile di contesto è ${{ steps.estrai_valore.outputs.cdn_path }}"
 
