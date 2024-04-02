@@ -32,7 +32,7 @@ jobs:
 
       - name: Set Variabile CDN1
         id: set-value-cdn1
-        run: echo "::set-output name=cnd_url::$(if [[ "${{ inputs.tenant }}" == "A" ]]; then echo "${{ vars.CDN_PATH_A }}"; else echo "${{ vars.CDN_PATH_B }}"; fi )"
+        run: echo "cnd_url=$(if [[ "${{ inputs.tenant }}" == "A" ]]; then echo "${{ vars.CDN_PATH_A }}"; else echo "${{ vars.CDN_PATH_B }}"; fi )" >> $GITHUB_OUTPUT
 
       - name: Set Variabile CDN2
         id: set-value-cdn
