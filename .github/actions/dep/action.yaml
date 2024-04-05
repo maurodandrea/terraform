@@ -29,7 +29,7 @@ runs:
 
     - name: bucket
       shell: bash
-      run: echo "${{ inputs.bucket }}"
+      run: echo "aws s3 sync ./apps/nextjs-website/out s3://${{ inputs.bucket }}/${{ inputs.environment }} --delete"
 
     - name: Env
       shell: bash
