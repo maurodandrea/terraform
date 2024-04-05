@@ -28,9 +28,13 @@ runs:
       run: echo "$CDN_PATH"
 
     - name: Deploy to S3 Bucket
+      env:
+        BUCKET: ${{ inputs.bucket }}
       shell: bash
-      run: run: echo "${{ inputs.bucket }}"
+      run: run: echo "$BUCKET"
 
     - name: Create AWS Cloudfront Invalidation
+      env:
+        CDN: ${{ inputs.cloudfront_distribution_id }}
       shell: bash
-      run: echo "${{ inputs.cloudfront_distribution_id }}"
+      run: echo "$CDN"
