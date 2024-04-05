@@ -27,11 +27,11 @@ runs:
       shell: bash
       run: echo "$CDN_PATH"
 
-    - name: Deploy to S3 Bucket
-      env:
-        ENVIRONMENT: ${{ inputs.environment }}
-      shell: bash
-      run: run: echo "$ENVIRONMENT"
+    #- name: Deploy to S3 Bucket
+    #  env:
+    #    ENVIRONMENT: ${{ inputs.environment }}
+     # shell: bash
+     # run: run: echo "$ENVIRONMENT"
 
     - name: Create AWS Cloudfront Invalidation
       env:
