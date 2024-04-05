@@ -32,6 +32,7 @@ runs:
       run: echo "${{ inputs.bucket }}"
 
     - name: Env
+      shell: bash
       run: echo "${{ inputs.environment }}"
 
     - name: Create AWS Cloudfront Invalidation
