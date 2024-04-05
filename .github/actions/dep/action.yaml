@@ -31,11 +31,8 @@ runs:
       shell: bash
       run: echo "${{ inputs.bucket }}"
 
-    #- name: Deploy to S3 Bucket
-    #  env:
-    #    ENVIRONMENT: ${{ inputs.environment }}
-     # shell: bash
-     # run: run: echo "$ENVIRONMENT"
+    - name: Env
+      run: echo "${{ inputs.environment }}"
 
     - name: Create AWS Cloudfront Invalidation
      # env:
