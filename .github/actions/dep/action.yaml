@@ -27,6 +27,10 @@ runs:
       shell: bash
       run: echo "$CDN_PATH"
 
+    - name: bucket
+      shell: bash
+      run: echo "${{ inputs.bucket }}"
+
     #- name: Deploy to S3 Bucket
     #  env:
     #    ENVIRONMENT: ${{ inputs.environment }}
