@@ -30,10 +30,20 @@
         "sections.feature",
         "sections.hero",
         "sections.how-to",
-        "sections.banner-link"
+        "sections.banner-link",
+        "sections.accordion",
+        "sections.cards",
+        "sections.stripe-link",
+        "sections.one-trust"
       ],
       "required": true,
       "min": 1
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo",
+      "required": true
     }
   }
 }

@@ -1,28 +1,14 @@
 {
   "collectionName": "components_sections_banner_links",
   "info": {
-    "displayName": "BannerLink"
+    "displayName": "BannerLink",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "title": {
       "type": "string",
       "required": true
-    },
-    "body": {
-      "type": "richtext",
-      "required": true
-    },
-    "reverse": {
-      "type": "boolean",
-      "default": false,
-      "required": true
-    },
-    "ctaButtons": {
-      "type": "component",
-      "repeatable": true,
-      "component": "components.cta-button",
-      "max": 2
     },
     "theme": {
       "type": "enumeration",
@@ -34,11 +20,26 @@
       "required": true
     },
     "decoration": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "ctaButtons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.cta-button-simple",
+      "max": 2
+    },
+    "sectionID": {
+      "type": "string",
+      "regex": "^[a-z]+[a-z\\-]*$"
+    },
+    "body": {
+      "type": "richtext",
+      "required": true
     }
   }
 }

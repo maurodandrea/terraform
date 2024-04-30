@@ -21,33 +21,19 @@
       "default": false,
       "required": true
     },
-    "avatar": {
+    "ctaButtons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.cta-button-simple",
+      "max": 2
+    },
+    "logo": {
       "type": "media",
       "multiple": false,
       "required": false,
       "allowedTypes": [
         "images"
       ]
-    },
-    "reverse": {
-      "type": "boolean",
-      "default": false,
-      "required": true
-    },
-    "theme": {
-      "type": "enumeration",
-      "enum": [
-        "light",
-        "dark"
-      ],
-      "default": "light",
-      "required": true
-    },
-    "ctaButtons": {
-      "type": "component",
-      "repeatable": true,
-      "component": "components.cta-button",
-      "max": 2
     }
   }
 }

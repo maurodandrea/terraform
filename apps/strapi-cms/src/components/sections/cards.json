@@ -1,0 +1,46 @@
+{
+  "collectionName": "components_sections_cards",
+  "info": {
+    "displayName": "Cards",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "theme": {
+      "type": "enumeration",
+      "enum": [
+        "light",
+        "dark"
+      ],
+      "default": "light",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.cards-item",
+      "required": true,
+      "min": 1
+    },
+    "sectionID": {
+      "type": "string",
+      "regex": "^[a-z]+[a-z\\-]*$"
+    },
+    "body": {
+      "type": "richtext"
+    },
+    "ctaButtons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.cta-button-simple",
+      "max": 2
+    }
+  }
+}

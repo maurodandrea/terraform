@@ -35,8 +35,8 @@ export default ({ env }: any) => ({
     enabled: true,
     config: {
       githubToken: env('GITHUB_PAT'),
-      owner: env('REPO_OWNER', 'maurodandrea'),
-      repo: env('REPO_NAME', 'terraform'),
+      owner: env('REPO_OWNER', 'pagopa'),
+      repo: env('REPO_NAME', 'b2b-portals'),
       workflowId: env('WORKFLOW_ID', 'deploy_website.yaml'),
       branch: env('TARGET_BRANCH', 'main'),
     },
