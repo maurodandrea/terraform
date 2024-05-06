@@ -12,7 +12,7 @@ export default ({ env }: any) => [
             'data:',
             'blob:',
             'strapi.io',
-            env('CDN_URL'),
+            env('AWS_BUCKET_FULL_URL'),
           ],
           // 'media-src': [
           //   "'self'",
