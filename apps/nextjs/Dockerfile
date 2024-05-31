@@ -27,5 +27,5 @@ ENV PATH /opt/node_modules/.bin:$PATH
 
 RUN chown -R node:node /opt/app
 USER node
-EXPOSE 1337
+EXPOSE 3000
 CMD npm run start
