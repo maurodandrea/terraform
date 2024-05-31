@@ -24,10 +24,10 @@ on:
         options:
         - prod
 
-#defaults:
-  #run:
-    #shell: bash
-    #working-directory: apps/strapi-cms
+defaults:
+  run:
+    shell: bash
+    working-directory: apps/nextjs
 
 permissions:
   id-token: write   # This is required for requesting the JWT
@@ -67,19 +67,19 @@ jobs:
           ECR_REPOSITORY: nextjs
           IMAGE_TAG: ${{ github.sha }}
         with:
-            context: apps/strapi-cms
+            context: apps/nextjs
             push: true
             tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
             provenance: false
 
       - name: Generate definition file
-        run: aws ecs describe-task-definition --task-definition nextjs-task-def --query taskDefinition > nextjs-task-definition.json
+        run: aws ecs describe-task-definition --task-definition nextjs-task-def --query taskDefinition > task-definition.json
        
       - name: Update Image in task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-           task-definition: apps/strapi-cms/nextjs-task-definition.json
+           task-definition: apps/nextjs/task-definition.json
            container-name: nextjs-docker
            image: ${{ steps.login-ecr.outputs.registry }}/nextjs:${{ github.sha }}
 
