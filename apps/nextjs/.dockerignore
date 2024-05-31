@@ -1,8 +1,4 @@
-.tmp/
-.cache/
-.git/
-build/
-node_modules/
-.env
-data/
-backup/
+#Put this in the docker ignore
+
+node_modules
+npm-debug.log
