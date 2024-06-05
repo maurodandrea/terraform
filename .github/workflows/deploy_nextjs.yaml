@@ -88,4 +88,4 @@ jobs:
         with:
            task-definition: ${{ steps.task-def.outputs.task-definition }}
            service: nextjs-ecs
-           cluster: nextjs-ecs-cluster
+           cluster: cms-ecs-cluster
